@@ -47,11 +47,27 @@ async function deleteSchool(id) {
   }
 }
 
+async function addCourse(schoolId, courseId) {
+  try {
+    const newCourse = await School.findByIdAndUpdate(schoolId, {
+      $push: {
+        courses: courseId
+      }
+    }, {
+      new: true
+    });
+    return newCourse;
+  } catch (err) {
+    throw err;
+  }
+}
+
 
 module.exports = {
   getSchools,
   getSchoolById,
   createSchool,
   updateSchool,
-  deleteSchool
+  deleteSchool,
+  addCourse
 };

@@ -35,6 +35,13 @@ var schoolService = {
         } catch (error) {
             throw error;
         }
+    },
+    addCourse: async function (courseId, schoolId) {
+        try {
+            return await SchoolDB.addCourse(courseId, schoolId);
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

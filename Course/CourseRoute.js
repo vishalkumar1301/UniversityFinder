@@ -1,58 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const { CourseModel, validate } = require('./models/course');
+const CourseService = require('./courseService');
 
 router.get('/', async (req, res) => {
-    const courses = await CourseModel.find().sort('name');
-    res.send(courses);
+    try {
+        const courses = await CourseService.getCourses();
+        res.send(courses);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 router.post('/', async (req, res) => {
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
 
-    let course = new CourseModel({
-        name: req.body.name,
-        author: req.body.author,
-        tags: req.body.tags,
-        isPublished: req.body.isPublished,
-        price: req.body.price
-    });
-    course = await course.save();
-    res.send(course);
+        let course = new CourseModel({
+            name: req.body.name,
+            author: req.body.author,
+            tags: req.body.tags,
+            isPublished: req.body.isPublished,
+            price: req.body.price
+        });
+
+    try {
+        await CourseService.createCourse(course);
+        res.status(200).send();
+    } catch (error) {
+        res.send(error.message);
+    }
 });
 
-router.put('/:id', async (req, res) => {
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    const course = await CourseModel.findByIdAndUpdate(req.params.id, {
-        name: req.body.name,
-        author: req.body.author,
-        tags: req.body.tags,
-        isPublished: req.body.isPublished,
-        price: req.body.price
-    }, { new: true });
-
-    if (!course) return res.status(404).send('The course with the given ID was not found.');
-
-    res.send(course);
-});
-
-router.delete('/:id', async (req, res) => {
-    const course = await CourseModel.findByIdAndRemove(req.params.id);
-
-    if (!course) return res.status(404).send('The course with the given ID was not found.');
-
-    res.send(course);
-});
-
-router.get('/:id', async (req, res) => {
-    const course = await CourseModel.findById(req.params.id);
-
-    if (!course) return res.status(404).send('The course with the given ID was not found.');
-
-    res.send(course);
+router.post('/addSubject', async (req, res) => {
+    try {
+        await CourseService.addSubject(req.body.courseId, req.body.subjectId);
+        res.status(200).send();
+    } catch (error) {
+        res.send(error.message);
+    }
 });
 
 module.exports = router;

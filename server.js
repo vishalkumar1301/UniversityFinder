@@ -4,6 +4,7 @@ var cors = require('cors');
 var router = express.Router();
 var SchoolRoute = require('./School/SchoolRoute');
 var CourseRoute = require('./Course/CourseRoute');
+var SubjectRoute = require('./Subject/SubjectRoute');
 var database = require('./database');
 
 app.use(cors());
@@ -11,6 +12,9 @@ app.use(cors());
 app.use('/', router);
 
 router.use('/school', SchoolRoute);
+router.use('/course', CourseRoute);
+router.use('/subject', SubjectRoute);
+
 
 
 app.listen(3000);

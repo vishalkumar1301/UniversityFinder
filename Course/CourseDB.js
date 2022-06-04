@@ -2,24 +2,12 @@ const mongoose = require('mongoose');
 const courseModel = require('./courseModel');
 
 
-async function getCourses() {
-    return await CourseModel
-        .find({ isPublished: true, tags: 'backend' })
-        .sort({ name: 1 })
-        .select({ name: 1, author: 1 });
-}
 
-async function createCourse(name, tags, startedOn, price, courseLevel) {
-    const course = new CourseModel({
-        name,
-        tags,
-        startedOn,
-        price,
-        courseLevel
-    });
+
+async function createCourse(course) {
 
     try {
-        const result = await course.save();
+        const result = await courseModel.create(course);
         return result;
     }
     catch (ex) {
@@ -36,11 +24,39 @@ async function getCourseById(id) {
     }
 }
 
-async function getCoursesByTags(query) {
+async function getCoursesByTagsAndName(tags, name) {
     try {
-        return await CourseModel.find({ tags: { $in: query.split(',') } });
+        return await CourseModel.find({ tags: { $in: tags.split(',') }, name: { $regex: name, $options: 'i' } });
     }
     catch (ex) {
         throw ex;
     }
+}
+
+async function getCourses() {
+    try {
+        return await CourseModel.find();
+    }
+    catch (ex) {
+        throw ex;
+    }
+}
+
+async function addSubject(courseId, subjectId) {
+    try {
+        const course = await CourseModel.findById(courseId);
+        course.subjects.push(subjectId);
+        return await course.save();
+    }
+    catch (ex) {
+        throw ex;
+    }
+}
+
+module.exports = {
+    createCourse,
+    getCourseById,
+    getCoursesByTagsAndName,
+    getCourses,
+    addSubject
 }

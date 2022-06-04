@@ -39,5 +39,8 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     SchoolService.deleteSchool(req, res);
 });
+router.post('/addCourse', (req, res) => {
+    SchoolService.addCourse(req, res);
+});
 
 module.exports = router;
