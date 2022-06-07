@@ -6,8 +6,30 @@ const schoolSchema = new mongoose.Schema({
         required: true
     },
     address: {
-        type: String,
-        required: true
+        state: {
+            type: String,
+            required: true
+        },
+        country: {
+            type: String,
+            required: true
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        street: {
+            type: String,
+            required: true
+        },
+        zipcode: {
+            type: String,
+            required: true
+        },
+        locationString: {
+            type: String,
+            required: true
+        }
     },
     phone: {
         type: String,
@@ -24,6 +46,10 @@ const schoolSchema = new mongoose.Schema({
     schoolType: {
         type: String, 
         enum: ['College', 'University']
+    },
+    schoolTypePublicPrivate: {
+        type: String, 
+        enum: ['Public', 'Private']
     },
     schoolMoto: {
         type: String,

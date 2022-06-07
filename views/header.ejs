@@ -1,0 +1,19 @@
+<nav class="navbar bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <img src="/images/Cologist.PNG" alt="" width="90" height="72">
+      </a>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2 w-200" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <div>
+        <a href="/admin"><button class="btn btn-light ml-auto border border-secondary" type="submit" id="admin">Admin</button></a>
+      <% if(isAuthenticated){ %>
+        <button class="btn btn-primary" type="submit" id="login">Logout</button>
+        <% } else { %>
+          <button class="btn btn-primary" type="submit" id="logout">Login</button>
+        <% } %>
+      </div>
+    </div>
+  </nav>
