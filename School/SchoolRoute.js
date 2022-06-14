@@ -1,47 +1,48 @@
 const express = require('express');
 const router = express.Router();
 const SchoolService = require('./schoolService');
+const SchoolModel = require('./SchoolModel');
 
-router.get('/', () => {
-    SchoolService.getAllSchool();
+router.get('/get-all-school', async (req, res) => {
+    let schoolList = await SchoolService.getAllSchool();
+    res.send(schoolList);
 });
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     let id = req.params.id;
-    SchoolService.getSchoolById(id);
-
+    let school = await SchoolService.getSchoolById(id);
+    res.send(school);
 });
 router.post('/', async (req, res) => {
-    console.log(req.body);
-    // const schoolName = req.query.schoolName,
-    //     schoolAddress = req.query.schoolAddress,
-    //     schoolPhone = req.query.schoolPhone,
-    //     schoolEmail = req.query.schoolEmail,
-    //     schoolWebsite = req.query.schoolWebsite,
-    //     schoolType = req.query.schoolType,
-    //     schoolMoto = req.query.schoolMoto,
-    //     schoolCreatedAtDate = req.query.schoolCreatedAtDate;
 
-    // const school = new School({
-    //     name: schoolName,
-    //     address: schoolAddress,
-    //     phone: schoolPhone,
-    //     email: schoolEmail,
-    //     website: schoolWebsite,
-    //     schoolType: schoolType,
-    //     schoolMoto: schoolMoto,
-    //     createdAtDate: schoolCreatedAtDate
-    // });
-    // let createdSchool = await SchoolService.createSchool(school, res)
+    const Name = req.body.Name;
+    const SchoolMoto = req.body.Moto;
+    const SchoolType = req.body.Type;
+    const SchoolTypePublicPrivate = req.body.TypePublicPrivate;
+    const Email = req.body.Email;
+    const PhoneNumber = req.body.PhoneNumber;
+    const Website = req.body.Website;
+    const CreatedAtDate = req.body.CreatedAtDate;
+    const Address = {
+        LocationString: req.body.Address.LocationString,
+        Street: req.body.Address.Street,
+        City: req.body.Address.City,
+        State: req.body.Address.State,
+        ZipCode: req.body.Address.ZipCode,
+        Country: req.body.Address.Country
+    }
+
+    const school = new SchoolModel({ Name, SchoolMoto, SchoolType, SchoolTypePublicPrivate, Email, PhoneNumber, Website, CreatedAtDate, Address });
+    let createdSchool = await SchoolService.createSchool(school, res)
     return res.status(200).send(req.body);
 });
-router.put('/:id', (req, res) => {
-    SchoolService.updateSchool(req, res);
+router.put('/:id', async (req, res) => {
+    await SchoolService.updateSchool(req, res);
 });
-router.delete('/:id', (req, res) => {
-    SchoolService.deleteSchool(req, res);
+router.delete('/:id', async (req, res) => {
+    await SchoolService.deleteSchool(req, res);
 });
-router.post('/addCourse', (req, res) => {
-    SchoolService.addCourse(req, res);
+router.post('/addCourse', async (req, res) => {
+    await SchoolService.addCourse(req, res);
 });
 
 module.exports = router;

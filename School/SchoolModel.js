@@ -1,64 +1,60 @@
 const mongoose = require('mongoose');
 
 const schoolSchema = new mongoose.Schema({
-    name: {
+    Name: {
         type: String,
         required: true
     },
-    address: {
-        state: {
+    Address: {
+        State: {
             type: String,
             required: true
         },
-        country: {
+        Country: {
             type: String,
             required: true
         },
-        city: {
+        City: {
             type: String,
             required: true
         },
-        street: {
+        ZipCode: {
             type: String,
             required: true
         },
-        zipcode: {
-            type: String,
-            required: true
-        },
-        locationString: {
+        LocationString: {
             type: String,
             required: true
         }
     },
-    phone: {
+    PhoneNumber: {
         type: String,
         required: true
     },
-    email: {
+    Email: {
         type: String,
         required: true
     },
-    website: {
+    Website: {
         type: String,
         required: true
     },
-    schoolType: {
+    Type: {
         type: String, 
         enum: ['College', 'University']
     },
-    schoolTypePublicPrivate: {
+    TypePublicPrivate: {
         type: String, 
         enum: ['Public', 'Private']
     },
-    schoolMoto: {
+    Moto: {
         type: String,
         required: true
     },
-    schoolCreatedAtDate: {
+    SchoolCreatedAtDate: {
         type: Date,
     },
-    courses: [{
+    Courses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     }]

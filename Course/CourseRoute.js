@@ -15,10 +15,9 @@ router.post('/', async (req, res) => {
 
         let course = new CourseModel({
             name: req.body.name,
-            author: req.body.author,
             tags: req.body.tags,
-            isPublished: req.body.isPublished,
-            price: req.body.price
+            price: req.body.price,
+            courseLevel: req.body.courseLevel,
         });
 
     try {

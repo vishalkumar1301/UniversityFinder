@@ -8,6 +8,15 @@ var schoolService = {
             throw error;
         }
     },
+
+    getAllSchool: async function () {
+        try {
+            return await SchoolDB.getAllSchool();
+        } catch (error) {
+            throw error;
+        }
+    },
+    
     getSchoolById: async function (id) {
         try {
             return await SchoolDB.getSchoolById(id);

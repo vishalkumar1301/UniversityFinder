@@ -1,6 +1,15 @@
 var mongoose = require('mongoose');
 var School = require('./SchoolModel');
 
+async function getAllSchool() {
+  try {
+    const schools = await School.find({});
+    return schools;
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function getSchools() {
   try {
     const schools = await School.find({});
@@ -65,6 +74,7 @@ async function addCourse(schoolId, courseId) {
 
 module.exports = {
   getSchools,
+  getAllSchool,
   getSchoolById,
   createSchool,
   updateSchool,
